@@ -1,0 +1,73 @@
+[
+    {
+           "id"    : 1,
+           "person" : "aerteat",
+           "name" : "basketball1",
+           "price" : 2000,
+           "img" : "/products/basketball1.jpeg"
+       },
+       {
+           "id"    : 2,
+           "person" : "utyn",
+           "name" : "basketball2",
+           "price" : 2000,
+           "img" : "/products/basketball2.jpg"
+       },
+       {
+           "id"    : 3,
+           "person" : "erobn",
+           "name" : "basketball3",
+           "price" : 2000,
+           "img" : "/products/basketball3.jpg"
+       },
+       {
+           "id"    : 4,
+           "person" : "rtuvv",
+           "name" : "dumbell1",
+           "price" : 2000,
+           "img" : "/products/dumbell1.jpeg"
+       },
+       {
+           "id"    : 5,
+           "person" : "ert",
+           "name" : "dumbell2",
+           "price" : 2000,
+           "img" : "/products/dumbell2.jpeg"
+       },
+       {
+           "id"    : 6,
+           "person" : "czb",
+           "name" : "keyboard1",
+           "price" : 2000,
+           "img" : "/products/keyboard1.jpg"
+       },
+       {
+           "id"    : 7,
+           "person" : "ertuyq",
+           "name" : "keyboard2",
+           "price" : 2000,
+           "img" : "/products/keyboard2.jpg"
+       },
+       {
+           "id"    : 8,
+           "person" : "ertqq",
+           "name" : "notebook1",
+           "price" : 2000,
+           "img" : "/products/notebook1.jpg"
+       },
+       {
+           "id"    : 9,
+           "person" : "aerteat",
+           "name" : "notebook2",
+           "price" : 2000,
+           "img" : "/products/notebook2.jpg"
+       },
+       {
+           "id"    : 10,
+           "person" : "aerteat",
+           "name" : "soccerball1",
+           "price" : 2000,
+           "img" : "/products/soccerball1.jpg"
+       }
+
+   ]
