@@ -3,14 +3,39 @@ const cors = require('cors')
 const app = express()
 const port = 8080;
 const models = require('./models/index.js')
+//multer는 multipart/form-data로 들어온 이미지를 처리하는 모듈로, 지정한 곳에 이미지 저장이 가능
+const multer = require('multer')
 
-const  products  = require('./data.json');
+const upload =  multer({
+    storage: multer.diskStorage({
+        //저장공간 위치
+        destination : (req, file, cb)=>{
+            cb(null, 'uploads/')
+        },
+        //파일 이름 설정 
+        filename : (req, file, cb)=>{
+            cb(null, file.originalname)
+        }
+    })
+})
 
 app.use(express.json());
 app.use(cors());
+app.use('/uploads',express.static('uploads'))
 
 app.get("/products",(req,res)=>{
-    models.Product.findAll()
+    models.Product.findAll({
+        order : [
+            ["createdAt","DESC"]
+        ],
+        attribute : [
+            'id',
+            'name',
+            'price',
+            'createdAt',
+            'perseon'
+        ]
+    })
     .then((result)=>{
         console.log(result)
         res.send({
@@ -27,11 +52,12 @@ app.get("/products",(req,res)=>{
 
 app.post('/products', (req,res)=>{
     const body = req.body;
-    const {name, price, person, desc} = body;
+    console.log(body)
+    const {name, price, person, description, img} = body;
 
     //방어 코드 
-    if(!name ||!price || !person || !desc ){
-        res.send('모든 정보를 입력해주세요.')
+    if(!name ||!price || !person || !description ){
+        res.status(400).send('모든 정보를 입력해주세요.')
     }
 
     //데이터베이스에 데이터 삽입
@@ -39,18 +65,19 @@ app.post('/products', (req,res)=>{
         name,
         price,
         person,
-        desc,
+        description,
+        img
    
     })
     .then((result)=>{
-        console.log(result)
+        console.log(result.dataValues)
+        let send = result.dataValues
         res.send({
-            result,
+            send 
         })
     })
     .catch(error=>{
-        console.error(error)
-        res.send('상품 업로드에 문제가 발생했습니다.')
+        res.status(400).send('상품 업로드에 문제가 발생했습니다.')
     })
 })
 
@@ -58,7 +85,32 @@ app.get('/products/:id' , (req,res)=>{
     
     const params = req.params;
     const {id} = params
-    res.send(`id는 ${id}입니다.`)
+    
+    models.Product.findOne({
+        where : {
+            id : id
+        }
+    })
+    .then((result )=>{
+        console.log(result)
+        res.send({
+            product: result
+        })
+    })
+    .catch((error)=>{
+        console.log(error)
+        res.status(400).send('상품 조회 에러가 발생했습니다.')
+
+    })
+})
+
+app.post('/image', upload.single('image'), (req,res)=>{
+    console.log(req)
+    const file = req.file;
+    console.log(file)
+    res.send({
+        img : file.path
+    })
 })
 
 app.listen(port,() => {
@@ -74,3 +126,6 @@ app.listen(port,() => {
             process.exit();
         });
 });
+
+
+
